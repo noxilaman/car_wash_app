@@ -25,11 +25,11 @@ DROP TABLE IF EXISTS `activities`;
 CREATE TABLE `activities` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `car_id` int(11) NOT NULL,
+  `wash_type_id ` int(11) NOT NULL,
   `status` varchar(100) NOT NULL,
   `note` text,
   `created_at` datetime NOT NULL,
   `modified_at` datetime NOT NULL,
-  `wash_type_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -137,7 +137,7 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -146,7 +146,6 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Test','test@com.com','12345678'),(3,'Test','test@com.com','12345678');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
