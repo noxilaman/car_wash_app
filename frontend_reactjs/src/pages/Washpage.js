@@ -7,14 +7,18 @@ import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import { useState,useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Washpage() {
+  const navigate = useNavigate(); 
   const [licensename,setLicensename] = useState('');
   const [city,setCity] = useState('');
   const [sizeId,setSizeId] = useState('');
   const [washTypeId,setWashTypeId] = useState('');
   const [carSizes,setCarSize] = useState([]);
+  const [price,setPrice] = useState(0);
   const [washTypes, setWashTypes] = useState([]);
+
   const [postResult,setPostResult] = useState(null);
 
   // const washTypeId = useRef();
@@ -35,8 +39,6 @@ function Washpage() {
           setWashTypes(response.data);
           console.log(response.data);
         });
-
-        priceHandler();
 
     } catch (err) {
       setPostResult(fortmatResponse(err.response?.data || err));
@@ -80,14 +82,18 @@ function Washpage() {
         scid !== "Open this select menu"
       ) {
         const res2 = await axios
-
           .get(
             "http://localhost:8086/api/price/getselected/" + wtid + "/" + scid
           )
           .then(function (response) {
             // setWashTypes(response.data);
+            if(response.data !== null){
+              console.log(response.data[0].price);
+              setPrice(response.data[0].price);
+            }else{
+              console.log(response);
+            }
             
-            console.log(response.data[0].price);
           });
       }
     } catch (error) {
@@ -100,7 +106,8 @@ function Washpage() {
       licensename: licensename,
       city: city,
       sizeId: sizeId,
-      washTypeId: washTypeId
+      washTypeId: washTypeId,
+      price: price
     };
 
     console.log(postData);
@@ -112,13 +119,11 @@ function Washpage() {
         },
       });
 
-      const result = {
-        status: res.status + "-" + res.statusText,
-        headers: res.headers,
-        data: res.data,
-      };
+      console.log(res.status);
+      if(res.status == 200){
+        navigate("/listpage");
+      }
 
-      setPostResult(fortmatResponse(result));
     } catch (err) {
       setPostResult(fortmatResponse(err.response?.data || err));
     }
@@ -183,6 +188,14 @@ function Washpage() {
                     <option value={opt.id}>{opt.name}</option>
                   ))}
                 </Form.Select>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formPrice">
+                <Form.Label>ราคา</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="ราคา"
+                  value={price}
+                />
               </Form.Group>
               <Button variant="primary" onClick={postdata}>
                 Submit

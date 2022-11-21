@@ -10,6 +10,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Mainpage from './pages/Mainpage';
 import Washpage from './pages/Washpage';
 import Dashboardpage from './pages/Dashboardpage';
+import Listpage from './pages/Listpage';
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/" element={<Mainpage />}></Route>
         <Route path="/washpage" element={<Washpage />}></Route>
         <Route path="/dashboardpage" element={<Dashboardpage />}></Route>
+        <Route path="/listpage" element={<Listpage />}></Route>
       </Routes>
     </BrowserRouter>
   );

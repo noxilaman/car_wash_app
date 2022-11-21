@@ -13,7 +13,7 @@ function Header() {
           <Nav className="me-auto">
             <Nav.Link href="/dashboardpage">Dashboard</Nav.Link>
             <Nav.Link href="/washpage">ล้างรถ</Nav.Link>
-            <Nav.Link href="#link">รายการ</Nav.Link>
+            <Nav.Link href="/listpage">รายการ</Nav.Link>
             <NavDropdown title="Base Data" id="basic-nav-dropdown">
               <NavDropdown.Item href="/admin/Cartypes">
                 ประเภทรถ

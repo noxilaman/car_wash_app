@@ -169,11 +169,11 @@ app.post('/api/washcar/create', (req, res) => {
             if (error) throw error;
              console.log(results);
                connection.query(
-                 "INSERT INTO activities (car_id, wash_type_id, status, note, created_at, modified_at) values (?,?,'Pending','',now(),now())",
-                 [results.insertId, postData.washTypeId],
+                 "INSERT INTO activities (car_id, wash_type_id, status, note, price, created_at, modified_at) values (?,?,'Pending','',?,now(),now())",
+                 [results.insertId, postData.washTypeId, postData.price],
                  function (error, results, fields) {
                    if (error) throw error;
-                   console.log(results);
+                   return res.status(200).json(results);
                  }
                );
 
