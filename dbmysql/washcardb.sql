@@ -28,6 +28,7 @@ CREATE TABLE `activities` (
   `wash_type_id ` int(11) NOT NULL,
   `status` varchar(100) NOT NULL,
   `note` text,
+  `price` float NOT NULL,
   `created_at` datetime NOT NULL,
   `modified_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
