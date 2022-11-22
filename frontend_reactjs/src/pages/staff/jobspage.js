@@ -1,45 +1,46 @@
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
-import Header from "../layouts/Header";
-import Footer from "../layouts/Footer";
-import { format } from "date-fns";
+import Header from "../../layouts/Header";
+import Footer from "../../layouts/Footer";
 import moment from "moment";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { QRCodeCanvas } from "qrcode.react";
 
-function Listpage() {
+function Jobspage() {
   const [WashList, setWashList] = useState([]);
+  
 
-   useEffect(() => {
-     (async () => {
-       try {
-         const res = await axios
-           .get("http://localhost:8086/api/activities/list")
-           .then(function (response) {
-             setWashList(response.data);
-             console.log(response.data);
-           });
-       } catch (err) {
-         console.log(err);
-       }
-     })();
-   }, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios
+          .get("http://localhost:8086/api/activities/list")
+          .then(function (response) {
+            setWashList(response.data);
+            console.log(response.data);
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
 
-   setInterval(async () => {
-     try {
-       const res = await axios
-         .get("http://localhost:8086/api/activities/list")
-         .then(function (response) {
-           setWashList(response.data);
-           console.log(response.data);
-         });
-     } catch (err) {
-       console.log(err);
-     }
-   }, 50000);
+  setInterval(async () => {
+    try {
+      const res = await axios
+        .get("http://localhost:8086/api/activities/list")
+        .then(function (response) {
+          setWashList(response.data);
+          console.log(response.data);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }, 50000);
   return (
     <div>
       <Header />
@@ -71,6 +72,21 @@ function Listpage() {
                     <td>{opt.carsize}</td>
                     <td>{opt.washtype}</td>
                     <td>{opt.washstatus}</td>
+                    <td>
+                        <a href={
+                          process.env.REACT_APP_WEB_URL +
+                          "/staff/activitiesjob/" +
+                          opt.id
+                        }>
+                      <QRCodeCanvas
+                        value={
+                          process.env.REACT_APP_WEB_URL +
+                          "/staff/activitiesjob/" +
+                          opt.id
+                        }
+                      />
+                      </a>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -83,4 +99,4 @@ function Listpage() {
   );
 }
 
-export default Listpage;
+export default Jobspage;

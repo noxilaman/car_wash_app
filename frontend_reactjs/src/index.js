@@ -11,6 +11,8 @@ import Mainpage from './pages/Mainpage';
 import Washpage from './pages/Washpage';
 import Dashboardpage from './pages/Dashboardpage';
 import Listpage from './pages/Listpage';
+import Jobspage from './pages/staff/jobspage';
+import ActivitiesJobspage from "./pages/staff/activitiesjobpage";
 
 export default function App() {
   return (
@@ -20,6 +22,11 @@ export default function App() {
         <Route path="/washpage" element={<Washpage />}></Route>
         <Route path="/dashboardpage" element={<Dashboardpage />}></Route>
         <Route path="/listpage" element={<Listpage />}></Route>
+        <Route path="/staff/jobspage" element={<Jobspage />}></Route>
+        <Route
+          path="/staff/activitiesjob/:id"
+          element={<ActivitiesJobspage />}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
