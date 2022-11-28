@@ -21,7 +21,9 @@ function Jobspage() {
           .get("http://localhost:8086/api/activities/list")
           .then(function (response) {
             setWashList(response.data);
-            console.log(response.data);
+            response.data.map((opt) => {
+              console.log(opt);
+            });
           });
       } catch (err) {
         console.log(err);
@@ -35,7 +37,9 @@ function Jobspage() {
         .get("http://localhost:8086/api/activities/list")
         .then(function (response) {
           setWashList(response.data);
-          console.log(response.data);
+          response.data.map((opt) => {
+            console.log(opt);
+          });
         });
     } catch (err) {
       console.log(err);

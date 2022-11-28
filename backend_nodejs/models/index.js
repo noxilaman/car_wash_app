@@ -21,5 +21,10 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.members = require("./member.model")(sequelize, Sequelize);
+db.cars = require("./car.model")(sequelize, Sequelize);
+db.activities = require("./activity.model")(sequelize, Sequelize);
+db.car_sizes = require("./car_size.model")(sequelize, Sequelize);
+db.prices = require("./price.model")(sequelize, Sequelize);
+db.wash_types = require("./wash_type.model")(sequelize, Sequelize);
 
 module.exports = db;

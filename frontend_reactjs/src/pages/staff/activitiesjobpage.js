@@ -47,7 +47,7 @@ function ActivitiesJobspage() {
       status: status,
     };
 
-    console.log(postData);
+  //  console.log(postData);
 
     try {
       const res = await axios.post(
@@ -60,7 +60,7 @@ function ActivitiesJobspage() {
         }
       );
 
-      console.log(res.status);
+      // console.log(res.status);
       if (res.status == 200) {
         navigate("/staff/jobspage");
       }

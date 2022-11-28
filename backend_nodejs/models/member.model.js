@@ -10,6 +10,5 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING(50)
       }
     });
-  
     return Member;
   };

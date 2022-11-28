@@ -8,6 +8,7 @@ const sizecarRouter = require("./router/api/sizecarRouter");
 const washtypeRouter = require("./router/api/washtypeRouter");
 const priceRouter = require("./router/api/priceRouter");
 const activitiesRouter = require("./router/api/activitiesRouter");
+const carsRouter = require("./router/api/carsRouter");
 
 const app = express();
 const port = 8086;
@@ -29,13 +30,14 @@ db.sequelize.sync()
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use("/api/car", carsRouter);
 app.use("/api/washcar", washcarRouter);
 app.use("/api/initial", initialRouter);
 app.use("/api/sizecar", sizecarRouter);
 app.use("/api/washtype", washtypeRouter);
 app.use("/api/activities", activitiesRouter);
-
 app.use("/api/price", priceRouter);
+
 app.get('/api', (req, res) => {
     res.send('Hello World, from express');
 });

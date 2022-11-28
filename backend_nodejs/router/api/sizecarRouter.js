@@ -1,24 +1,9 @@
 var express = require("express");
-const connection = require("../../config/databaseConnection");
+const carsizes = require("../../controllers/car_size.controller");
 var router = express.Router();
 
+router.get("/getall", carsizes.findAll);
 
-router.get("/getall", (req, res) => {
-  try {
-    connection.query(
-      "select * from car_size;",
-      function (error, results, fields) {
-        if (error) throw error;
-        console.log(results);
-
-        return res.status(200).json(results);
-      }
-    );
-
-    //connection.end();
-  } catch (error) {
-    console.log(error);
-  }
-});
+router.post("/", carsizes.create);
 
 module.exports = router;

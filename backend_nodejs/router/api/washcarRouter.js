@@ -1,27 +1,63 @@
 var express = require("express");
 const connection = require("../../config/databaseConnection");
 var router = express.Router();
+const cars = require("../../controllers/car.controller");
+const activities = require("../../controllers/activity.controller");
 router.get("/", function (req, res) {
   res.send("Heroes Page");
 });
-router.post("/create", function (req, res) {
-  const postData = req.body;
 
-  connection.query(
-    "INSERT INTO car (license_code, city, car_size_id, note, created_at, modified_at) values (?,?,?,'',now(),now())",
-    [postData.licensename, postData.city, postData.sizeId],
-    function (error, results, fields) {
-      if (error) throw error;
-      console.log(results);
-      connection.query(
-        "INSERT INTO activities (car_id, wash_type_id, status, note, price, created_at, modified_at) values (?,?,'Pending','',?,now(),now())",
-        [results.insertId, postData.washTypeId, postData.price],
-        function (error, results, fields) {
-          if (error) throw error;
-          return res.status(200).json(results);
-        }
-      );
+
+
+
+
+router.post("/create", async function (req, res) {
+  try {
+    const postData = req.body;
+
+    //validate Empty data
+    if (
+      !(
+        postData.licensename &&
+        postData.city &&
+        postData.sizeId &&
+        postData.washTypeId &&
+        postData.price
+      )
+    ) {
+      res.status(400).send("All Input is required");
     }
-  );
+
+
+    const gResult = await cars.haveCar(
+      postData.licensename,
+      postData.city
+    );
+
+    var carid;
+    if (gResult.length === 0) {
+      const Result = await cars.fncreate(
+        postData.licensename,
+        postData.city,
+        postData.sizeId
+      );
+      //console.log(Result);
+      carid = Result.id;
+    } else {
+      //console.log(gResult[0].id);
+      carid = gResult[0].id;
+      // xports.fncreate = async(car_id, wash_type_id, price);
+    }
+
+    if(carid){
+      const Result = await activities.fncreate(
+        carid, postData.washTypeId, postData.price);
+      res.status(200).send("pass");
+    }
+    
+  } catch (error) {
+      console.log(error);
+  }
+  
 });
 module.exports = router;

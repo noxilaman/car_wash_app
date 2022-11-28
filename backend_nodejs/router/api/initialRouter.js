@@ -35,7 +35,7 @@ router.get("/", (req, res) => {
     try {
       console.log(opt);
       connection.query(
-        "INSERT INTO car_size (`name`, `desc`, created_at, modified_at) value (?,?,now(),now());",
+        "INSERT INTO car_sizes (`name`, `desc`, createdAt, updatedAt) value (?,?,now(),now());",
         [opt, opt],
         function (error, results, fields) {
           if (error) throw error;
@@ -51,7 +51,7 @@ router.get("/", (req, res) => {
     try {
       console.log(opt);
       connection.query(
-        "INSERT INTO wash_types (`name`, `desc`, created_at, modified_at) value (?,?,now(),now());",
+        "INSERT INTO wash_types (`name`, `desc`, createdAt, updatedAt) value (?,?,now(),now());",
         [opt, opt],
         function (error, results, fields) {
           if (error) throw error;
@@ -67,7 +67,7 @@ router.get("/", (req, res) => {
     try {
       // console.log(opt[0]);
       connection.query(
-        "INSERT INTO prices (`wash_type_id`, `car_size_id`,price, created_at, modified_at) value ((select id from wash_types where `name` = ? limit 1),(select id from car_size where `name` = ? limit 1),?,now(),now());",
+        "INSERT INTO prices (`wash_type_id`, `car_size_id`,price, createdAt, updatedAt) value ((select id from wash_types where `name` = ? limit 1),(select id from car_sizes where `name` = ? limit 1),?,now(),now());",
         [opt[0], opt[1], opt[2]],
         function (error, results, fields) {
           if (error) throw error;
