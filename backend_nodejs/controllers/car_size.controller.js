@@ -140,3 +140,41 @@ exports.deleteAll = (req, res) => {
         });
       });
 };
+
+exports.fncreate = async (name, desc) => {
+  // Validate request
+  // Validate request
+  if (!name) {
+    res.status(400).send({
+      message: "name can not be empty!",
+    });
+    return;
+  }
+
+  if (!desc) {
+    res.status(400).send({
+      message: "desc can not be empty!",
+    });
+    return;
+  }
+
+  // Create a Tutorial
+  const carsize = {
+    name: name,
+    desc: desc,
+  };
+
+  // Save Tutorial in the database
+  const result = await CarSize.create(carsize);
+  if (result === null) {
+    console.log("Not found!");
+    return [];
+  } else {
+    return result;
+  }
+};
+
+exports.findByName = async (name) => {
+  const result = await CarSize.findAll({ where: { name: name } });
+  return result;
+};

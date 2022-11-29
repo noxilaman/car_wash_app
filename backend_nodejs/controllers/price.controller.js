@@ -165,3 +165,34 @@ exports.deleteAll = (req, res) => {
         });
       });
 };
+
+exports.fncreate = async (wash_type_id, car_size_id, price) => {
+  // Validate request
+  if (!wash_type_id) {
+    return;
+  }
+
+  if (!car_size_id) {
+    return;
+  }
+  
+  if (!price) {
+    return;
+  }
+
+  // Create a Tutorial
+  const priceObj = {
+    wash_type_id: wash_type_id,
+    car_size_id: car_size_id,
+    price: price,
+  };
+
+  // Save Tutorial in the database
+  const result = await Price.create(priceObj);
+  if (result === null) {
+    console.log("Not found!");
+    return [];
+  } else {
+    return result;
+  }
+};

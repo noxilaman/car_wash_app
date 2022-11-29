@@ -9,6 +9,8 @@ const washtypeRouter = require("./router/api/washtypeRouter");
 const priceRouter = require("./router/api/priceRouter");
 const activitiesRouter = require("./router/api/activitiesRouter");
 const carsRouter = require("./router/api/carsRouter");
+const usersRouter = require("./router/api/userRouter");
+const auth = require("./middleware/auth");
 
 const app = express();
 const port = 8086;
@@ -37,9 +39,14 @@ app.use("/api/sizecar", sizecarRouter);
 app.use("/api/washtype", washtypeRouter);
 app.use("/api/activities", activitiesRouter);
 app.use("/api/price", priceRouter);
+app.use("/api/user", usersRouter);
 
 app.get('/api', (req, res) => {
     res.send('Hello World, from express');
 });
+
+app.post("/welcome",auth,(req,res)=>{
+  res.status(200).send("Hello World, from express");
+})
 
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`))
