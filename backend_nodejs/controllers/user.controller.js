@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
 const db = require("../models");
 const User = db.users;
 const Op = db.Sequelize.Op;
@@ -253,10 +253,10 @@ exports.login = async (req, res) => {
       const token = jwt.sign(
         { id: user.id, email },
         process.env.JWT_TOKEN_KEY,
-        { expiresIn: "2h"}
+        { expiresIn: "2h" }
       );
 
-      user.token  = token;
+      user.token = token;
       await user.save();
       return res.status(200).json(user);
     }
