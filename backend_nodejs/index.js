@@ -1,4 +1,5 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const multer = require("multer");
@@ -31,6 +32,7 @@ db.sequelize.sync()
 // Configuring body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(fileUpload());
 
 app.use("/api/car", carsRouter);
 app.use("/api/washcar", washcarRouter);
@@ -49,6 +51,6 @@ app.post("/welcome",auth,(req,res)=>{
   res.status(200).send("Hello World, from express");
 })
 
-module.exports = app;
-//app.listen(port, () => console.log(`Hello world app listening on port ${port}!`))
+//module.exports = app;
+app.listen(port, () => console.log(`Hello world app listening on port ${port}!`))
 // app.listen(port);

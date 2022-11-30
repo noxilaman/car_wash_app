@@ -15,6 +15,12 @@ router.post("/create", async function (req, res) {
   try {
     const postData = req.body;
 
+    console.log(req.files);
+    
+    const { File } = req.files;
+
+    File.mv(__dirname+ '/../../uploads/' + File.name);
+
     //validate Empty data
     if (
       !(

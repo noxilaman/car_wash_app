@@ -18,6 +18,11 @@ function Washpage() {
   const [carSizes,setCarSize] = useState([]);
   const [price,setPrice] = useState(0);
   const [washTypes, setWashTypes] = useState([]);
+  const [selectedFile, setSelectedFile] = useState();
+  const [isSelected, setIsSelected] = useState(false);
+
+	
+
 
   const [postResult,setPostResult] = useState(null);
 
@@ -70,6 +75,11 @@ function Washpage() {
     priceHandler(event.target.value, sizeId);
   }
 
+  const selectFileHandler = (event) => {
+		setSelectedFile(event.target.files[0]);
+		setIsSelected(true);
+	};
+
   const priceHandler = async (wtid,scid) => {
     try {
       console.log(
@@ -107,15 +117,27 @@ function Washpage() {
       city: city,
       sizeId: sizeId,
       washTypeId: washTypeId,
-      price: price
+      price: price,
     };
 
-    console.log(postData);
+   
+
+    const formData = new FormData();
+
+    formData.append('licensename', licensename);
+    formData.append('city', city);
+    formData.append('sizeId', sizeId);
+    formData.append('washTypeId', washTypeId);
+    formData.append('price', price);
+    formData.append('File', selectedFile);
+
+    console.log(formData);
 
     try {
-      const res = await axios.post("http://localhost:8086/api/washcar/create", postData, {
+      const res = await axios.post("http://localhost:8086/api/washcar/create", formData, {
         headers: {
           "x-access-token": "token-value",
+          "Content-Type": "multipart/form-data",
         },
       });
 
@@ -159,7 +181,7 @@ function Washpage() {
               </Form.Group>
               <Form.Group controlId="formFile" className="mb-3">
                 <Form.Label>รูปรถ</Form.Label>
-                <Form.Control type="file" accept="image/*" />
+                <Form.Control type="file" accept="image/*" onChange={selectFileHandler} />
               </Form.Group>
             </Col>
             <Col>
