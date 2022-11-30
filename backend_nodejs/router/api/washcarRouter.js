@@ -19,7 +19,7 @@ router.post("/create", async function (req, res) {
     
     const { File } = req.files;
 
-    File.mv(__dirname+ '/../../uploads/' + File.name);
+    File.mv(__dirname+ '/../../../frontend_reactjs/public/uploads/' + File.name);
 
     //validate Empty data
     if (
