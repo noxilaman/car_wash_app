@@ -2,17 +2,15 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
-import Header from "../layouts/Header";
-import Footer from "../layouts/Footer";
-import { format } from "date-fns";
-import moment from "moment";
+import Header from "../../../layouts/Header";
+import Footer from "../../../layouts/Footer";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Listpage() {
+function ListUserPage() {
   const navigate = useNavigate();
-  const [WashList, setWashList] = useState([]);
+  const [userList, setUserList] = useState([]);
 
   const tokenkey = localStorage.getItem("token");
 
@@ -20,21 +18,20 @@ function Listpage() {
     (async () => {
       try {
         const res = await axios
-          .get("http://localhost:8086/api/activities/list", {
+          .get("http://localhost:8086/api/user", {
             headers: {
               "x-access-token": tokenkey,
             },
           })
           .then(function (response) {
             if (response.status === 200) {
-              setWashList(response.data);
+              setUserList(response.data);
             } else {
               localStorage.setItem("token", "");
               navigate("/login");
             }
           });
       } catch (err) {
-
         console.log(err);
         localStorage.setItem("token", "");
         navigate("/login");
@@ -42,59 +39,75 @@ function Listpage() {
     })();
   }, []);
 
-  setInterval(async () => {
+  const deleteUserHandler = async (event)=> {
+    const id = event.target.dataset.id;
+
     try {
-      const res = await axios
-        .get("http://localhost:8086/api/activities/list", {
+      const res = await axios.delete(
+        "http://localhost:8086/api/user/" + id,
+        {
           headers: {
             "x-access-token": tokenkey,
           },
-        })
-        .then(function (response) {
-          if (response.status === 200) {
-            setWashList(response.data);
-          } else {
-            localStorage.setItem("token", "");
-            navigate("/login");
-          }
-        });
+        }
+      );
+
+      console.log(res.status);
+      if (res.status === 200) {
+        navigate("/admin/user/list");
+      }
     } catch (err) {
       console.log(err);
     }
-  }, 50000);
+  }
+
   return (
     <div>
       <Header />
       <Container fluid>
         <Row>
           <Col className="text-center">
-            <h1>รายการล้างรถ</h1>
+            <h1>รายการ User</h1>
           </Col>
         </Row>
         <Row>
           <Col>
+            <a href={"/admin/user/create/"} className="btn btn-info">
+              สร้าง User
+            </a>
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th>วันเวลา</th>
-                  <th>ทะเบียนรถ</th>
-                  <th>ขนาดรถ</th>
-                  <th>ประเภท</th>
-                  <th>สถานะ</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                {WashList.map((opt) => (
+                {userList.map((opt) => (
                   <tr>
                     <td>
-                      {moment(opt.createdate).format("YYYY-MM-DD hh:mm")}
+                      {opt.fname} - {opt.lname}
                     </td>
+                    <td>{opt.email}</td>
+                    <td>{opt.mobile}</td>
                     <td>
-                      {opt.licensecode} - {opt.licensecity}
+                      <a
+                        href={"/admin/user/edit/" + opt.id}
+                        className="btn btn-primary"
+                      >
+                        Edit
+                      </a>
+                      &nbsp;
+                      <button
+                        className="btn btn-danger"
+                        data-id={opt.id}
+                        onClick={deleteUserHandler}
+                      >
+                        Delete
+                      </button>
                     </td>
-                    <td>{opt.carsize}</td>
-                    <td>{opt.washtype}</td>
-                    <td>{opt.washstatus}</td>
                   </tr>
                 ))}
               </tbody>
@@ -107,4 +120,4 @@ function Listpage() {
   );
 }
 
-export default Listpage;
+export default ListUserPage;

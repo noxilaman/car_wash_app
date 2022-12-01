@@ -8,33 +8,50 @@ const jwt = require("jsonwebtoken");
 // Create and Save a new Tutorial
 exports.create = async (req, res) => {
   // Validate request
-  if (!req.body.license_code) {
+  if (!req.body.fname) {
     res.status(400).send({
       message: "license_code can not be empty!",
     });
     return;
   }
 
-  if (!req.body.city) {
+  if (!req.body.lname) {
     res.status(400).send({
       message: "city can not be empty!",
     });
     return;
   }
 
-  if (!req.body.car_size_id) {
+  if (!req.body.mobile) {
     res.status(400).send({
       message: "Car size can not be empty!",
     });
     return;
   }
 
+  if (!req.body.email) {
+    res.status(400).send({
+      message: "Car size can not be empty!",
+    });
+    return;
+  }
+
+  if (!req.body.password) {
+    res.status(400).send({
+      message: "Car size can not be empty!",
+    });
+    return;
+  }
+
+  var encyptedPassword = await bcrypt.hash(req.body.password, 10);
+
   // Create a Tutorial
   const user = {
-    license_code: req.body.license_code,
-    city: req.body.city,
-    car_size_id: req.body.car_size_id,
-    note: req.body.note,
+    fname: req.body.fname,
+    lname: req.body.lname,
+    mobile: req.body.mobile,
+    email: req.body.email,
+    password: encyptedPassword,
   };
 
   // Save Tutorial in the database
@@ -51,10 +68,8 @@ exports.create = async (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
-  const license_code = req.query.license_code;
-  var condition = license_code
-    ? { license_code: { [Op.like]: `%${license_code}%` } }
-    : null;
+  const fname = req.query.fname;
+  var condition = fname ? { fname: { [Op.like]: `%${fname}%` } } : null;
 
   User.findAll({ where: condition })
     .then((data) => {

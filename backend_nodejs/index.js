@@ -34,21 +34,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(fileUpload());
 
-app.use("/api/car", carsRouter);
-app.use("/api/washcar", washcarRouter);
+app.use("/api/car", auth, carsRouter);
+app.use("/api/washcar", auth, washcarRouter);
 app.use("/api/initial", initialRouter);
-app.use("/api/sizecar", sizecarRouter);
-app.use("/api/washtype", washtypeRouter);
-app.use("/api/activities", activitiesRouter);
-app.use("/api/price", priceRouter);
+app.use("/api/sizecar",auth, sizecarRouter);
+app.use("/api/washtype", auth, washtypeRouter);
+app.use("/api/activities",auth, activitiesRouter);
+app.use("/api/price", auth, priceRouter);
 app.use("/api/user", usersRouter);
 
 app.get('/api', (req, res) => {
     res.send('Hello World, from express');
 });
 
-app.post("/welcome",auth,(req,res)=>{
-  res.status(200).send("Hello World, from express");
+app.get("/api/checkauth",auth,(req,res)=>{
+  res.status(200).send("Auth Pass");
 })
 
 //module.exports = app;

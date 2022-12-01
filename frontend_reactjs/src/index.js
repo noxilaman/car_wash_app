@@ -12,6 +12,12 @@ import Washpage from './pages/Washpage';
 import Dashboardpage from './pages/Dashboardpage';
 import Listpage from './pages/Listpage';
 import Jobspage from './pages/staff/jobspage';
+import Loginpage from './pages/auth/loginpage'
+//User
+import CreateUserPage from "./pages/admin/users/CreateUserPage";
+import EditUserPage from "./pages/admin/users/EditUserPage";
+import ListUserPage from "./pages/admin/users/ListUserPage";
+
 import ActivitiesJobspage from "./pages/staff/activitiesjobpage";
 
 export default function App() {
@@ -23,6 +29,11 @@ export default function App() {
         <Route path="/dashboardpage" element={<Dashboardpage />}></Route>
         <Route path="/listpage" element={<Listpage />}></Route>
         <Route path="/staff/jobspage" element={<Jobspage />}></Route>
+        <Route path="/login" element={<Loginpage />}></Route>
+
+        <Route path="/admin/user/create" element={<CreateUserPage />}></Route>
+        <Route path="/admin/user/edit/:id" element={<EditUserPage />}></Route>
+        <Route path="/admin/user/list" element={<ListUserPage />}></Route>
         <Route
           path="/staff/activitiesjob/:id"
           element={<ActivitiesJobspage />}
