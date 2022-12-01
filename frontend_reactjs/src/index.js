@@ -18,6 +18,14 @@ import CreateUserPage from "./pages/admin/users/CreateUserPage";
 import EditUserPage from "./pages/admin/users/EditUserPage";
 import ListUserPage from "./pages/admin/users/ListUserPage";
 
+import CreateCarSizePage from "./pages/admin/car_sizes/CreateCarSizePage";
+import EditCarSizePage from "./pages/admin/car_sizes/EditCarSizePage";
+import ListCarSizePage from "./pages/admin/car_sizes/ListCarSizePage";
+
+import CreateWashtypePage from "./pages/admin/washtypes/CreateWashtypePage";
+import EditWashtypePage from "./pages/admin/washtypes/EditWashtypePage";
+import ListWashtypePage from "./pages/admin/washtypes/ListWashtypePage";
+
 import ActivitiesJobspage from "./pages/staff/activitiesjobpage";
 
 export default function App() {
@@ -34,6 +42,27 @@ export default function App() {
         <Route path="/admin/user/create" element={<CreateUserPage />}></Route>
         <Route path="/admin/user/edit/:id" element={<EditUserPage />}></Route>
         <Route path="/admin/user/list" element={<ListUserPage />}></Route>
+
+        <Route
+          path="/admin/carsize/create"
+          element={<CreateCarSizePage />}
+        ></Route>
+        <Route
+          path="/admin/carsize/edit/:id"
+          element={<EditCarSizePage />}
+        ></Route>
+        <Route path="/admin/carsize/list" element={<ListCarSizePage />}></Route>
+
+        <Route
+          path="/admin/washtype/create"
+          element={<CreateWashtypePage />}
+        ></Route>
+        <Route
+          path="/admin/washtype/edit/:id"
+          element={<EditWashtypePage />}
+        ></Route>
+        <Route path="/admin/washtype/list" element={<ListWashtypePage />}></Route>
+
         <Route
           path="/staff/activitiesjob/:id"
           element={<ActivitiesJobspage />}

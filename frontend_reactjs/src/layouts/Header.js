@@ -18,8 +18,11 @@ function Header() {
               <NavDropdown.Item href="/admin/user/list">
                 พนักงาน
               </NavDropdown.Item>
-              <NavDropdown.Item href="/admin/Cartypes">
-                ประเภทรถ
+              <NavDropdown.Item href="/admin/carsize/list">
+                ขนาดรถ
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/admin/washtype/list">
+                บริการ
               </NavDropdown.Item>
               <NavDropdown.Item href="/admin/Products">
                 สถานะการทำงาน
