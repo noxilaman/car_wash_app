@@ -21,6 +21,7 @@ function Washpage() {
   const [selectedFile, setSelectedFile] = useState();
   const [isSelected, setIsSelected] = useState(false);
 
+  const tokenkey = localStorage.getItem("token");
 	
 
 
@@ -32,14 +33,22 @@ function Washpage() {
     (async () => {
     try {
       const res = await axios
-        .get("http://localhost:8086/api/sizecar/getall")
+        .get("http://localhost:8086/api/sizecar/getall", {
+          headers: {
+            "x-access-token": tokenkey,
+          },
+        })
         .then(function (response) {
           setCarSize(response.data);
           console.log(response.data);
         });
 
       const res2 = await axios
-        .get("http://localhost:8086/api/washtype/getall")
+        .get("http://localhost:8086/api/washtype/getall", {
+          headers: {
+            "x-access-token": tokenkey,
+          },
+        })
         .then(function (response) {
           setWashTypes(response.data);
           console.log(response.data);
@@ -82,9 +91,6 @@ function Washpage() {
 
   const priceHandler = async (wtid,scid) => {
     try {
-      console.log(
-        "http://localhost:8086/api/price/getselected/" + wtid + "/" + scid
-      );
       if (
         wtid !== "" &&
         scid !== "" &&
@@ -94,7 +100,11 @@ function Washpage() {
         const res2 = await axios
           .get(
             "http://localhost:8086/api/price/getselected/" + wtid + "/" + scid
-          )
+            , {
+              headers: {
+                "x-access-token": tokenkey,
+              },
+            })
           .then(function (response) {
             // setWashTypes(response.data);
             if(response.data !== null){
@@ -136,7 +146,7 @@ function Washpage() {
     try {
       const res = await axios.post("http://localhost:8086/api/washcar/create", formData, {
         headers: {
-          "x-access-token": "token-value",
+          "x-access-token": tokenkey,
           "Content-Type": "multipart/form-data",
         },
       });

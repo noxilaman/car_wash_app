@@ -19,6 +19,18 @@ exports.create = async (req, res) => {
     return;
   }
 
+  var condition = {
+    name: req.body.name
+  };
+
+  const result = await CarSize.findAll({ where: condition });
+  if (result.length > 0) {
+    res.status(401).send({
+      message: "Already have prices!",
+    });
+    return;
+  }
+
   // Create a Tutorial
   const carsize = {
     name: req.body.name,

@@ -15,7 +15,7 @@ const verifyToken = async (req,res,next) => {
         req.user = decode;
     } catch (error) {
         console.log(error)
-        return res.status(403).send("Expired Key");
+        return res.status(404).send("Expired Key");
     }
 
     return next();

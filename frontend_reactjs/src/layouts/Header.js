@@ -24,8 +24,8 @@ function Header() {
               <NavDropdown.Item href="/admin/washtype/list">
                 บริการ
               </NavDropdown.Item>
-              <NavDropdown.Item href="/admin/Products">
-                สถานะการทำงาน
+              <NavDropdown.Item href="/admin/price/list">
+                ราคาบริการ
               </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">รายการล้าง</NavDropdown.Item>
             </NavDropdown>

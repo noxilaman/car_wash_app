@@ -1,20 +1,41 @@
 const db = require("../models");
+const { QueryTypes } = require("sequelize");
 const Price = db.prices;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Tutorial
 exports.create = async (req, res) => {
   // Validate request
-  if (!req.body.name) {
+  if (!req.body.wash_type_id) {
     res.status(400).send({
       message: "name can not be empty!",
     });
     return;
   }
 
-  if (!req.body.desc) {
+  if (!req.body.car_size_id) {
     res.status(400).send({
       message: "desc can not be empty!",
+    });
+    return;
+  }
+
+  if (!req.body.price) {
+    res.status(400).send({
+      message: "desc can not be empty!",
+    });
+    return;
+  }
+
+  var condition = {
+    wash_type_id: req.body.wash_type_id,
+    car_size_id: req.body.car_size_id
+  };
+
+  const result = await Price.findAll({ where: condition });
+  if (result.length > 0) {
+    res.status(400).send({
+      message: "Already have prices!",
     });
     return;
   }
@@ -195,4 +216,20 @@ exports.fncreate = async (wash_type_id, car_size_id, price) => {
   } else {
     return result;
   }
+};
+
+exports.list = async (req, res) =>{
+  const data = await Price.seq.query(
+    "SELECT prices.id, prices.price, car_sizes.name as car_size_name , wash_types.name as wash_type_name FROM prices LEFT JOIN car_sizes ON car_sizes.id = prices.car_size_id LEFT JOIN wash_types ON wash_types.id = prices.wash_type_id",
+    {
+      type: QueryTypes.SELECT,
+    }
+  );
+     if (data) {
+       res.send(data);
+     } else {
+       res.status(404).send({
+         message: `Cannot find Activity.`,
+       });
+     }
 };

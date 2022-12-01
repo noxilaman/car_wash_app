@@ -26,6 +26,11 @@ import CreateWashtypePage from "./pages/admin/washtypes/CreateWashtypePage";
 import EditWashtypePage from "./pages/admin/washtypes/EditWashtypePage";
 import ListWashtypePage from "./pages/admin/washtypes/ListWashtypePage";
 
+import CreatePricePage from "./pages/admin/prices/CreatePricePage";
+import EditPricePage from "./pages/admin/prices/EditPricePage";
+import ListPricePage from "./pages/admin/prices/ListPricePage";
+
+
 import ActivitiesJobspage from "./pages/staff/activitiesjobpage";
 
 export default function App() {
@@ -62,6 +67,19 @@ export default function App() {
           element={<EditWashtypePage />}
         ></Route>
         <Route path="/admin/washtype/list" element={<ListWashtypePage />}></Route>
+
+        <Route
+          path="/admin/price/create"
+          element={<CreatePricePage />}
+        ></Route>
+        <Route
+        path="/admin/price/edit/:id"
+        element={<EditPricePage />}
+      ></Route>
+         <Route
+          path="/admin/price/list"
+          element={<ListPricePage />}
+        ></Route>
 
         <Route
           path="/staff/activitiesjob/:id"
