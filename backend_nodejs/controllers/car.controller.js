@@ -89,10 +89,6 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    req.body.map((value)=>{
-      console.log(value);
-    });
-
     Car.update(req.body, {
       where: { id: id },
     })

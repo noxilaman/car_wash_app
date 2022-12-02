@@ -19,6 +19,18 @@ exports.create = async (req, res) => {
     return;
   }
 
+  var condition = {
+    name: req.body.name,
+  };
+
+  const chk = await WashType.findAll({ where: condition });
+  if (chk.length > 0) {
+    res.status(401).send({
+      message: "Already have prices!",
+    });
+    return;
+  }
+
   // Create a Tutorial
   const washtype = {
     name: req.body.name,
@@ -156,6 +168,18 @@ exports.fncreate = async (name, desc) => {
   if (!desc) {
     res.status(400).send({
       message: "desc can not be empty!",
+    });
+    return;
+  }
+
+  var condition = {
+    name: name,
+  };
+
+  const chk = await WashType.findAll({ where: condition });
+  if (chk.length > 0) {
+    res.status(401).send({
+      message: "Already have prices!",
     });
     return;
   }

@@ -50,7 +50,9 @@ app.get('/api', (req, res) => {
 app.get("/api/checkauth",auth,(req,res)=>{
   res.status(200).send("Auth Pass");
 })
-
+//For Test
 //module.exports = app;
+
+//For Runing
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`))
 // app.listen(port);

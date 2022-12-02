@@ -12,13 +12,17 @@ import { QRCodeCanvas } from "qrcode.react";
 
 function Jobspage() {
   const [WashList, setWashList] = useState([]);
-  
+  const tokenkey = localStorage.getItem("token");
 
   useEffect(() => {
     (async () => {
       try {
         const res = await axios
-          .get("http://localhost:8086/api/activities/list")
+          .get("http://localhost:8086/api/activities/list", {
+            headers: {
+              "x-access-token": tokenkey,
+            },
+          })
           .then(function (response) {
             setWashList(response.data);
             response.data.map((opt) => {
@@ -34,7 +38,11 @@ function Jobspage() {
   setInterval(async () => {
     try {
       const res = await axios
-        .get("http://localhost:8086/api/activities/list")
+        .get("http://localhost:8086/api/activities/list", {
+          headers: {
+            "x-access-token": tokenkey,
+          },
+        })
         .then(function (response) {
           setWashList(response.data);
           response.data.map((opt) => {

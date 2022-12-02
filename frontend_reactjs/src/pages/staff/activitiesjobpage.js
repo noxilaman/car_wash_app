@@ -14,12 +14,18 @@ function ActivitiesJobspage() {
     const { id } = useParams();
   const [washData, setWashData] = useState([]);
   const [showLoading, setShowLoading] = useState(true);
+  
+  const tokenkey = localStorage.getItem("token");
 
   useEffect(() => {
     (async () => {
       try {
         const res = await axios
-          .get("http://localhost:8086/api/activities/get/" + id)
+          .get("http://localhost:8086/api/activities/get/" + id, {
+            headers: {
+              "x-access-token": tokenkey,
+            },
+          })
           .then(function (response) {
             setWashData(response.data);
             setShowLoading(false);
@@ -55,7 +61,7 @@ function ActivitiesJobspage() {
         postData,
         {
           headers: {
-            "x-access-token": "token-value",
+            "x-access-token": tokenkey,
           },
         }
       );

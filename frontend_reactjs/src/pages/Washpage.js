@@ -22,8 +22,6 @@ function Washpage() {
   const [isSelected, setIsSelected] = useState(false);
 
   const tokenkey = localStorage.getItem("token");
-	
-
 
   const [postResult,setPostResult] = useState(null);
 
@@ -32,6 +30,19 @@ function Washpage() {
   useEffect(() => { 
     (async () => {
     try {
+      const chk = await axios
+        .get("http://localhost:8086/api/checkauth", {
+          headers: {
+            "x-access-token": tokenkey,
+          },
+        })
+        .then(function (response) {
+          if (response.status !== 200) {
+            localStorage.setItem("token", "");
+            navigate("/login");
+          }
+        });
+
       const res = await axios
         .get("http://localhost:8086/api/sizecar/getall", {
           headers: {
@@ -55,7 +66,8 @@ function Washpage() {
         });
 
     } catch (err) {
-      setPostResult(fortmatResponse(err.response?.data || err));
+      console.log(err);
+      navigate("/login");
     }
   })();
 },[]);
@@ -122,15 +134,6 @@ function Washpage() {
   };
 
   const postdata = async () => {
-    const postData = {
-      licensename: licensename,
-      city: city,
-      sizeId: sizeId,
-      washTypeId: washTypeId,
-      price: price,
-    };
-
-   
 
     const formData = new FormData();
 
@@ -139,7 +142,9 @@ function Washpage() {
     formData.append('sizeId', sizeId);
     formData.append('washTypeId', washTypeId);
     formData.append('price', price);
-    formData.append('File', selectedFile);
+    if (selectedFile){
+      formData.append("File", selectedFile);
+    } 
 
     console.log(formData);
 

@@ -14,6 +14,7 @@ function Loginpage() {
   const navigate = useNavigate(); 
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
+  const [alertMessage, setAlertMessage] = useState("");
 
     const emailHandler = event => {
     setEmail(event.target.value);
@@ -24,11 +25,20 @@ function Loginpage() {
   }
 
   const postdata = async () => {
+    if(!email){
+      setAlertMessage("Email is empty!");
+      return;
+    }
+
+    if (!password) {
+      setAlertMessage("Password is empty!");
+      return;
+    }
+
     const postData = {
       email: email,
       password: password
     };
-
 
     try {
       const res = await axios.post(
@@ -42,13 +52,16 @@ function Loginpage() {
       );
 
       console.log(res.status);
-      if (res.status == 200) {
+      if (res.status === 200) {
         //console.log(res.data);
         localStorage.setItem("token", res.data.token);
         navigate("/listpage");
+      }else{
+        setAlertMessage(res.data.message);
       }
     } catch (err) {
       console.log(err);
+      setAlertMessage(err.response.data.message);
     }
   };
 
@@ -79,7 +92,9 @@ function Loginpage() {
                     placeholder="ใส่ Password"
                     onChange={passwordHandler}
                   />
+                  <Form.Label className="text-danger">{alertMessage}</Form.Label>
                 </Form.Group>
+                
                 <Button variant="primary" onClick={postdata}>
                   Login
                 </Button>

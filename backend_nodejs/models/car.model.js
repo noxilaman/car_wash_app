@@ -12,6 +12,9 @@ module.exports = (sequelize, Sequelize) => {
     note: {
       type: Sequelize.TEXT,
     },
+    photo: {
+      type: Sequelize.TEXT,
+    },
   });
 
   return Car;

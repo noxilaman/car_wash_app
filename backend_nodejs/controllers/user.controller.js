@@ -205,14 +205,14 @@ exports.fncreate = async (fname, lname, mobile, email, password) => {
     });
     return;
   }
-
+var encyptedPassword = await bcrypt.hash(password, 10);
   // Create a Tutorial
   const user = {
     fname: fname,
     lname: lname,
     mobile: mobile,
     email: email,
-    password: password,
+    password: encyptedPassword,
   };
 
   // Save Tutorial in the database
@@ -247,6 +247,7 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+
     // Validate request
     if (!email) {
       res.status(400).send({
@@ -262,7 +263,9 @@ exports.login = async (req, res) => {
       return;
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ where: { email: email } });
+
+    console.log(user);
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const token = jwt.sign(
@@ -276,7 +279,7 @@ exports.login = async (req, res) => {
       return res.status(200).json(user);
     }
 
-    return res.status(400).send("login fail");
+    return res.status(401).send({ message: "Login Fail" });
   } catch (error) {
     console.log(error);
   }

@@ -170,6 +170,17 @@ exports.fncreate = async (name, desc) => {
     return;
   }
 
+  var condition = {
+    name: name,
+  };
+
+  const chk = await CarSize.findAll({ where: condition });
+  if (chk.length > 0) {
+    res.status(401).send({
+      message: "Already have prices!",
+    });
+    return;
+  }
   // Create a Tutorial
   const carsize = {
     name: name,

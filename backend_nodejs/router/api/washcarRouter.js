@@ -15,11 +15,13 @@ router.post("/create", async function (req, res) {
   try {
     const postData = req.body;
 
-    console.log(req.files);
-    
-    const { File } = req.files;
+    //console.log(req.files);
+    if( req.files){
+      const { File } = req.files;
 
-    File.mv(__dirname+ '/../../../frontend_reactjs/public/uploads/' + File.name);
+      File.mv(__dirname+ '/../../../frontend_reactjs/public/uploads/' + File.name);
+    }
+    
 
     //validate Empty data
     if (
