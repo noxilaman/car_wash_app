@@ -23,6 +23,7 @@
 /frontend_reactjs/yarn-error.log*
 
 /backend_nodejs/node_modules
+/backend_nodejs/coverage
 
 # misc
 /backend_nodejs/.DS_Store
@@ -36,3 +37,4 @@
 .env.development.local
 .env.test.local
 .env.production.local
+
