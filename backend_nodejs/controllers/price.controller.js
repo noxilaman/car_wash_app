@@ -6,28 +6,36 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Tutorial
 exports.create = async (req, res) => {
   // Validate request
+  if (!req.body.shop_id) {
+    res.status(400).send({
+      message: "shop can not be empty!",
+    });
+    return;
+  }
+
   if (!req.body.wash_type_id) {
     res.status(400).send({
-      message: "name can not be empty!",
+      message: "wash type can not be empty!",
     });
     return;
   }
 
   if (!req.body.car_size_id) {
     res.status(400).send({
-      message: "desc can not be empty!",
+      message: "car size can not be empty!",
     });
     return;
   }
 
   if (!req.body.price) {
     res.status(400).send({
-      message: "desc can not be empty!",
+      message: "price can not be empty!",
     });
     return;
   }
 
   var condition = {
+    shop_id: req.body.shop_id,
     wash_type_id: req.body.wash_type_id,
     car_size_id: req.body.car_size_id
   };
@@ -42,6 +50,7 @@ exports.create = async (req, res) => {
 
   // Create a Tutorial
   const price = {
+    shop_id: req.body.shop_id,
     wash_type_id: req.body.wash_type_id,
     car_size_id: req.body.car_size_id,
     price: req.body.price,
@@ -80,6 +89,7 @@ exports.findAll = (req, res) => {
 exports.getselected = (req, res) => {
   console.log("Param req");
   console.log(req.params);
+  const shop_id = req.params.shop_id;
   const wash_type_id = req.params.wash_type_id;
   const car_size_id = req.params.car_size_id;
   var condition = {
@@ -187,8 +197,12 @@ exports.deleteAll = (req, res) => {
       });
 };
 
-exports.fncreate = async (wash_type_id, car_size_id, price) => {
+exports.fncreate = async (shop_id ,wash_type_id, car_size_id, price) => {
   // Validate request
+  if (!shop_id) {
+    return;
+  }
+
   if (!wash_type_id) {
     return;
   }
@@ -203,6 +217,7 @@ exports.fncreate = async (wash_type_id, car_size_id, price) => {
 
   // Create a Tutorial
   const priceObj = {
+    shop_id: shop_id,
     wash_type_id: wash_type_id,
     car_size_id: car_size_id,
     price: price,
@@ -220,7 +235,7 @@ exports.fncreate = async (wash_type_id, car_size_id, price) => {
 
 exports.list = async (req, res) =>{
   const data = await Price.seq.query(
-    "SELECT prices.id, prices.price, car_sizes.name as car_size_name , wash_types.name as wash_type_name FROM prices LEFT JOIN car_sizes ON car_sizes.id = prices.car_size_id LEFT JOIN wash_types ON wash_types.id = prices.wash_type_id",
+    "SELECT prices.id, prices.price, shops.name as shop_name, car_sizes.name as car_size_name , wash_types.name as wash_type_name FROM prices LEFT JOIN car_sizes ON car_sizes.id = prices.car_size_id LEFT JOIN wash_types ON wash_types.id = prices.wash_type_id LEFT JOIN shops ON shops.id = prices.shop_id",
     {
       type: QueryTypes.SELECT,
     }

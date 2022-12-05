@@ -8,7 +8,8 @@ module.exports = (sequelize, Sequelize) => {
       },
       mobile: {
         type: Sequelize.STRING(50)
-      }
+      },
+      
     });
     return Member;
   };

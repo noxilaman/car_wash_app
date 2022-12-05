@@ -156,13 +156,13 @@ function Washpage() {
         },
       });
 
-      console.log(res.status);
+      console.log(res);
       if(res.status == 200){
         navigate("/listpage");
       }
 
     } catch (err) {
-      setPostResult(fortmatResponse(err.response?.data || err));
+      console.log(err);
     }
   }
 

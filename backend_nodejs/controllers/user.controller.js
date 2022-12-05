@@ -265,9 +265,14 @@ exports.login = async (req, res) => {
 
     const user = await User.findOne({ where: { email: email } });
 
-    console.log(user);
+    
+
+    const resultchk = await bcrypt.compare(password, user.password)
 
     if (user && (await bcrypt.compare(password, user.password))) {
+
+      console.log("PASS");
+
       const token = jwt.sign(
         { id: user.id, email },
         process.env.JWT_TOKEN_KEY,
@@ -279,7 +284,7 @@ exports.login = async (req, res) => {
       return res.status(200).json(user);
     }
 
-    return res.status(401).send({ message: "Login Fail" });
+    return res.status(401).send({ message: "Login Fail", obj: user });
   } catch (error) {
     console.log(error);
   }

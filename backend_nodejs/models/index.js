@@ -27,5 +27,6 @@ db.car_sizes = require("./car_size.model")(sequelize, Sequelize);
 db.prices = require("./price.model")(sequelize, Sequelize);
 db.wash_types = require("./wash_type.model")(sequelize, Sequelize);
 db.users = require("./user.model")(sequelize, Sequelize);
+db.shops = require("./shop.model")(sequelize, Sequelize);
 
 module.exports = db;

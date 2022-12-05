@@ -4,6 +4,7 @@ const carsizes = require("../../controllers/car_size.controller");
 const washtypes = require("../../controllers/wash_type.controller");
 const prices = require("../../controllers/price.controller");
 const users = require("../../controllers/user.controller");
+const shops = require("../../controllers/shop.controller");
 var router = express.Router();
 
 router.get("/", (req, res) => {
@@ -65,6 +66,7 @@ router.get("/", (req, res) => {
           const washtype = await washtypes.findByName(opt[0]);
 
           const result = await prices.fncreate(
+            1,
             washtype[0].id,
             carsize[0].id,
             opt[2]
@@ -81,20 +83,30 @@ router.get("/", (req, res) => {
 
 router.get("/usersetup", async (req, res) => {
   try {
-    const promise2 = new Promise(async (resolve, reject) => {
-      var encyptedPassword = await bcrypt.hash("password", 10);
+    const promise1 = new Promise(async (resolve, reject) => {
 
+      const result = await shops.fncreate(
+        "demo",
+        "/uploads/logo/demo.png",
+        "000000000",
+        "noxil",
+        "-"
+      );
+      resolve(result);
+    });
+    const promise2 = new Promise(async (resolve, reject) => {
+      
       const result = await users.fncreate(
         "admin",
         "admin",
         "0000000000",
         "admin@admin.com",
-        encyptedPassword
+        "password",
       );
       resolve(result);
-    });
+    }); 
 
-    Promise.all([promise2])
+    Promise.all([promise1,promise2])
       .finally(() => {
         res.send("end");
       });

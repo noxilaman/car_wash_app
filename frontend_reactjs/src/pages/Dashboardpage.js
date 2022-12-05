@@ -11,17 +11,12 @@ function Dashboardpage() {
       <Container fluid>
         <Row>
           <Col className="text-center">
-            <h1>Dashboardpage</h1>
+            <h1>ระบบจัดการร้านล้างรถแบบง่าย</h1>
           </Col>
         </Row>
         <Row>
-          <Col>1 of 2</Col>
-          <Col>2 of 2</Col>
-        </Row>
-        <Row>
-          <Col>1 of 3</Col>
-          <Col>2 of 3</Col>
-          <Col>3 of 3</Col>
+          <Col>ส่วนบริการลูกค้า</Col>
+          <Col>ส่วนจัดการหลังบ้าย</Col>
         </Row>
       </Container>
       <Footer />

@@ -57,6 +57,7 @@ function Loginpage() {
         localStorage.setItem("token", res.data.token);
         navigate("/listpage");
       }else{
+        localStorage.setItem("token", "");
         setAlertMessage(res.data.message);
       }
     } catch (err) {

@@ -30,6 +30,7 @@ import CreatePricePage from "./pages/admin/prices/CreatePricePage";
 import EditPricePage from "./pages/admin/prices/EditPricePage";
 import ListPricePage from "./pages/admin/prices/ListPricePage";
 
+import MyCarPage from "./pages/public/MyCarPage";
 
 import ActivitiesJobspage from "./pages/staff/activitiesjobpage";
 
@@ -85,6 +86,14 @@ export default function App() {
           path="/staff/activitiesjob/:id"
           element={<ActivitiesJobspage />}
         ></Route>
+
+        <Route
+          path="/mycar/view/:id"
+          element={<MyCarPage />}
+        ></Route>
+
+
+
       </Routes>
     </BrowserRouter>
   );

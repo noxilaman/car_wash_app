@@ -60,7 +60,7 @@ router.post("/create", async function (req, res) {
     if(carid){
       const Result = await activities.fncreate(
         carid, postData.washTypeId, postData.price);
-      res.status(200).send("pass");
+      res.status(200).send(Result);
     }
     
   } catch (error) {

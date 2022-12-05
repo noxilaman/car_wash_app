@@ -1,5 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
   const Activity = sequelize.define("activities", {
+    shop_id: {
+      type: Sequelize.INTEGER,
+    },
     car_id: {
       type: Sequelize.INTEGER,
     },

@@ -171,7 +171,7 @@ exports.fncreate = async (name, desc) => {
   }
 
   var condition = {
-    name: name,
+    name: name
   };
 
   const chk = await CarSize.findAll({ where: condition });

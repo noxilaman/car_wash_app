@@ -11,6 +11,8 @@ const priceRouter = require("./router/api/priceRouter");
 const activitiesRouter = require("./router/api/activitiesRouter");
 const carsRouter = require("./router/api/carsRouter");
 const usersRouter = require("./router/api/userRouter");
+const shopsRouter = require("./router/api/shopRouter");
+const publicRouter = require("./router/api/publicRouter")
 const auth = require("./middleware/auth");
 
 const app = express();
@@ -41,7 +43,9 @@ app.use("/api/sizecar",auth, sizecarRouter);
 app.use("/api/washtype", auth, washtypeRouter);
 app.use("/api/activities",auth, activitiesRouter);
 app.use("/api/price", auth, priceRouter);
+app.use("/api/shop", auth, shopsRouter);
 app.use("/api/user", usersRouter);
+app.use("/api/public", publicRouter);
 
 app.get('/api', (req, res) => {
     res.send('Hello World, from express');

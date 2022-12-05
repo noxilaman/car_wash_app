@@ -9,8 +9,10 @@ import moment from "moment";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { QRCodeCanvas } from "qrcode.react";
+import { useNavigate } from "react-router-dom";
 
 function Jobspage() {
+  const navigate = useNavigate(); 
   const [WashList, setWashList] = useState([]);
   const tokenkey = localStorage.getItem("token");
 
@@ -24,13 +26,15 @@ function Jobspage() {
             },
           })
           .then(function (response) {
-            setWashList(response.data);
-            response.data.map((opt) => {
-              console.log(opt);
-            });
+            if(response.status == 200){
+              setWashList(response.data);
+            }else{
+              navigate("/login");
+            }
           });
       } catch (err) {
         console.log(err);
+        navigate("/login");
       }
     })();
   }, []);
@@ -84,7 +88,7 @@ function Jobspage() {
                     <td>{opt.carsize}</td>
                     <td>{opt.washtype}</td>
                     <td>{opt.washstatus}</td>
-                    <td>
+                    <td>{process.env.REACT_APP_WEB_URL }
                         <a href={
                           process.env.REACT_APP_WEB_URL +
                           "/staff/activitiesjob/" +

@@ -44,6 +44,10 @@ function ActivitiesJobspage() {
     postdata("Cleaning");
   };
 
+  const waxUpdateStatusHandler = () => {
+    postdata("waxing");
+  };
+
   const endUpdateStatusHandler = () => {
     postdata("End");
   };
@@ -117,7 +121,15 @@ function ActivitiesJobspage() {
               >
                 เช็ดรถ ดูดฝุ่น
               </button>
-            </Col>
+            </Col> 
+            <Col className="text-center">
+              <button
+                className="btn btn-primary btn-lg"
+                onClick={waxUpdateStatusHandler}
+              >
+                เครือบสี
+              </button>
+            </Col> 
             <Col className="text-center">
               <button
                 className="btn btn-primary btn-lg"
