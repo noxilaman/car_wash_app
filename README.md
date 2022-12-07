@@ -1,6 +1,6 @@
 # App for Car Wash Business 
 
-This project use NodeJS + ReactJS + MySQL (Express, Sequelize, JWT, Jest)
+This project use NodeJS ( Backend - Typescript, Express, Sequelize, JWT, Jest) + ReactJS + MySQL
 # Feature
 - Auto Initial basedata.
 - Admin part for manage BaseData.
