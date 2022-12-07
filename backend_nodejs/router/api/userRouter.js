@@ -2,7 +2,6 @@ var express = require("express");
 const users = require("../../controllers/user.controller");
 var router = express.Router();
 
-
 const auth = require("../../middleware/auth");
 
 router.post("/", auth, users.create);

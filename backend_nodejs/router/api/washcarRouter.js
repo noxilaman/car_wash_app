@@ -1,5 +1,4 @@
 var express = require("express");
-const connection = require("../../config/databaseConnection");
 var router = express.Router();
 const cars = require("../../controllers/car.controller");
 const activities = require("../../controllers/activity.controller");
@@ -7,25 +6,23 @@ router.get("/", function (req, res) {
   res.send("Heroes Page");
 });
 
-
-
-
-
 router.post("/create", async function (req, res) {
   try {
     const postData = req.body;
 
     //console.log(req.files);
-    if( req.files){
+    if (req.files) {
       const { File } = req.files;
 
-      File.mv(__dirname+ '/../../../frontend_reactjs/public/uploads/' + File.name);
+      File.mv(
+        __dirname + "/../../../frontend_reactjs/public/uploads/" + File.name
+      );
     }
-    
 
     //validate Empty data
     if (
       !(
+        postData.shop_id &&
         postData.licensename &&
         postData.city &&
         postData.sizeId &&
@@ -36,11 +33,7 @@ router.post("/create", async function (req, res) {
       res.status(400).send("All Input is required");
     }
 
-
-    const gResult = await cars.haveCar(
-      postData.licensename,
-      postData.city
-    );
+    const gResult = await cars.haveCar(postData.licensename, postData.city);
 
     var carid;
     if (gResult.length === 0) {
@@ -57,15 +50,17 @@ router.post("/create", async function (req, res) {
       // xports.fncreate = async(car_id, wash_type_id, price);
     }
 
-    if(carid){
+    if (carid) {
       const Result = await activities.fncreate(
-        carid, postData.washTypeId, postData.price);
+        carid,
+        postData.shop_id,
+        postData.washTypeId,
+        postData.price
+      );
       res.status(200).send(Result);
     }
-    
   } catch (error) {
-      console.log(error);
+    console.log(error);
   }
-  
 });
 module.exports = router;

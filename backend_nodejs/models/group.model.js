@@ -1,5 +1,5 @@
 module.exports = function (sequelize, Sequelize) {
-    var WashType = sequelize.define("wash_types", {
+    var Group = sequelize.define("groups", {
         name: {
             type: Sequelize.STRING
         },
@@ -7,6 +7,6 @@ module.exports = function (sequelize, Sequelize) {
             type: Sequelize.TEXT
         }
     });
-    WashType.seq = sequelize;
-    return WashType;
+    Group.seq = sequelize;
+    return Group;
 };

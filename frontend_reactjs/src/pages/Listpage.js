@@ -8,44 +8,45 @@ import { format } from "date-fns";
 import moment from "moment";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 
 function Listpage() {
+  let { shop_id } = useParams();
   const navigate = useNavigate();
   const [WashList, setWashList] = useState([]);
 
   const tokenkey = localStorage.getItem("token");
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await axios
-          .get("http://localhost:8086/api/activities/list", {
-            headers: {
-              "x-access-token": tokenkey,
-            },
-          })
-          .then(function (response) {
-            if (response.status === 200) {
-              setWashList(response.data);
-            } else {
-              localStorage.setItem("token", "");
-              navigate("/login");
-            }
-          });
-      } catch (err) {
-
-        console.log(err);
-        localStorage.setItem("token", "");
-        navigate("/login");
-      }
-    })();
-  }, []);
+    useEffect(() => {
+      (async () => {
+        try {
+          const res = await axios
+            .get("http://localhost:8086/api/activities/listByShop/" + shop_id, {
+              headers: {
+                "x-access-token": tokenkey,
+              },
+            })
+            .then(function (response) {
+              if (response.status === 200) {
+                setWashList(response.data);
+              } else {
+                localStorage.setItem("token", "");
+                localStorage.setItem("shop_id", "");
+                navigate("/login");
+              }
+            });
+        } catch (err) {
+          console.log(err);
+          localStorage.setItem("token", "");
+          localStorage.setItem("shop_id", "");
+          navigate("/login");
+        }
+      })();
+    }, []);
 
   setInterval(async () => {
     try {
       const res = await axios
-        .get("http://localhost:8086/api/activities/list", {
+        .get("http://localhost:8086/api/activities/listByShop/" + shop_id, {
           headers: {
             "x-access-token": tokenkey,
           },
@@ -55,6 +56,7 @@ function Listpage() {
             setWashList(response.data);
           } else {
             localStorage.setItem("token", "");
+            localStorage.setItem("shop_id", "");
             navigate("/login");
           }
         });

@@ -55,7 +55,7 @@ function Loginpage() {
       if (res.status === 200) {
         //console.log(res.data);
         localStorage.setItem("token", res.data.token);
-        navigate("/listpage");
+        navigate("/");
       }else{
         localStorage.setItem("token", "");
         setAlertMessage(res.data.message);
