@@ -14,6 +14,9 @@ function Mainpage() {
   const [shopData,setShopData] = useState([])
 
   const tokenkey = localStorage.getItem("token");
+  const userobj = localStorage.getItem("user");
+
+  console.log(userobj);
 
   useEffect(() => {
     (async () => {

@@ -55,13 +55,18 @@ function Loginpage() {
       if (res.status === 200) {
         //console.log(res.data);
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data));
+        console.log(res.data);
         navigate("/");
       }else{
         localStorage.setItem("token", "");
+        localStorage.setItem("user", "");
         setAlertMessage(res.data.message);
       }
     } catch (err) {
       console.log(err);
+      localStorage.setItem("token", "");
+      localStorage.setItem("user", "");
       setAlertMessage(err.response.data.message);
     }
   };

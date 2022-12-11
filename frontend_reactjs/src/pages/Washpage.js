@@ -7,10 +7,11 @@ import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import { useState,useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 
 function Washpage() {
   const navigate = useNavigate(); 
+  let { shopid } = useParams();
   const [licensename,setLicensename] = useState('');
   const [city,setCity] = useState('');
   const [sizeId,setSizeId] = useState('');
@@ -22,7 +23,7 @@ function Washpage() {
   const [isSelected, setIsSelected] = useState(false);
 
   const tokenkey = localStorage.getItem("token");
-  const shop_id = localStorage.getItem("shop_id");
+  const shop_id = shopid ||  localStorage.getItem("shop_id");
 
   const [postResult,setPostResult] = useState(null);
 

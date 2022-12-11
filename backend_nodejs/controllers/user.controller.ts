@@ -2,6 +2,7 @@ require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
 const db = require("../models");
 const User = db.users;
 const Op = db.Sequelize.Op;
+const { QueryTypes } = require("sequelize");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -254,7 +255,7 @@ exports.login = async (req: any, res: any) => {
     if (user && (await bcrypt.compare(password, user.password))) {
 
       const token = jwt.sign(
-        { id: user.id, email },
+        { id: user.id, email, group_id: user.group_id },
         process.env.JWT_TOKEN_KEY,
         { expiresIn: "2h" }
       );
@@ -268,4 +269,20 @@ exports.login = async (req: any, res: any) => {
   } catch (error: any) {
     return res.status(401).send({ message: "Error", obj: error });
   }
+};
+
+exports.list  = async (req: any, res: any) =>{
+  const data = await User.seq.query(
+    "SELECT users.id, users.fname, users.lname, users.email , users.mobile, groups.name as groupname FROM users LEFT JOIN groups ON groups.id = users.group_id",
+    {
+      type: QueryTypes.SELECT,
+    }
+  );
+     if (data) {
+       res.send(data);
+     } else {
+       res.status(404).send({
+         message: `Cannot find Users.`,
+       });
+     }
 };

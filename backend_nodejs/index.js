@@ -7,6 +7,7 @@ const washcarRouter = require("./router/api/washcarRouter");
 const initialRouter = require("./router/api/initialRouter");
 const sizecarRouter = require("./router/api/sizecarRouter");
 const washtypeRouter = require("./router/api/washtypeRouter");
+const groupRouter = require('./router/api/groupRouter')
 const priceRouter = require("./router/api/priceRouter");
 const activitiesRouter = require("./router/api/activitiesRouter");
 const carsRouter = require("./router/api/carsRouter");
@@ -41,6 +42,7 @@ app.use("/api/washcar", auth, washcarRouter);
 app.use("/api/initial", initialRouter);
 app.use("/api/sizecar",auth, sizecarRouter);
 app.use("/api/washtype", auth, washtypeRouter);
+app.use("/api/group", auth, groupRouter);
 app.use("/api/activities",auth, activitiesRouter);
 app.use("/api/price", auth, priceRouter);
 app.use("/api/shop", auth, shopsRouter);
