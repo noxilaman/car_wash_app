@@ -17,6 +17,11 @@ import Loginpage from './pages/auth/loginpage'
 import CreateUserPage from "./pages/admin/users/CreateUserPage";
 import EditUserPage from "./pages/admin/users/EditUserPage";
 import ListUserPage from "./pages/admin/users/ListUserPage";
+import ChangeGroupPage from "./pages/admin/users/ChangeGroupPage"
+
+import CreateGroupPage from './pages/admin/groups/CreateGroupPage';
+import EditGroupPage from './pages/admin/groups/EditGroupPage';
+import ListGroupPage from './pages/admin/groups/ListGroupPage';
 
 import CreateCarSizePage from "./pages/admin/car_sizes/CreateCarSizePage";
 import EditCarSizePage from "./pages/admin/car_sizes/EditCarSizePage";
@@ -39,7 +44,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Mainpage />}></Route>
-        <Route path="/washpage" element={<Washpage />}></Route>
+        <Route path="/washpage/:shopid" element={<Washpage />}></Route>
         <Route path="/dashboardpage" element={<Dashboardpage />}></Route>
         <Route path="/listpage/:shop_id" element={<Listpage />}></Route>
         <Route path="/staff/jobspage" element={<Jobspage />}></Route>
@@ -48,6 +53,18 @@ export default function App() {
         <Route path="/admin/user/create" element={<CreateUserPage />}></Route>
         <Route path="/admin/user/edit/:id" element={<EditUserPage />}></Route>
         <Route path="/admin/user/list" element={<ListUserPage />}></Route>
+        <Route path="/admin/user/editgroup/:id" element={<ChangeGroupPage />}></Route>
+        
+
+        <Route
+          path="/admin/group/create"
+          element={<CreateGroupPage />}
+        ></Route>
+        <Route
+          path="/admin/group/edit/:id"
+          element={<EditGroupPage />}
+        ></Route>
+        <Route path="/admin/group/list" element={<ListGroupPage />}></Route>
 
         <Route
           path="/admin/carsize/create"

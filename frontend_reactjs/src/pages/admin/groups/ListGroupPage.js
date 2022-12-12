@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function ListUserPage() {
+function ListGroupPage() {
   const navigate = useNavigate();
   const [userList, setUserList] = useState([]);
 
@@ -18,12 +18,13 @@ function ListUserPage() {
     (async () => {
       try {
         const res = await axios
-          .get("http://localhost:8086/api/user/list", {
+          .get("http://localhost:8086/api/group", {
             headers: {
               "x-access-token": tokenkey,
             },
           })
           .then(function (response) {
+            console.log(response);
             if (response.status === 200) {
               setUserList(response.data);
             } else {
@@ -39,12 +40,12 @@ function ListUserPage() {
     })();
   }, []);
 
-  const deleteUserHandler = async (event)=> {
+  const deleteCarSizeHandler = async (event) => {
     const id = event.target.dataset.id;
 
     try {
       const res = await axios.delete(
-        "http://localhost:8086/api/user/" + id,
+        "http://localhost:8086/api/group/" + id,
         {
           headers: {
             "x-access-token": tokenkey,
@@ -54,12 +55,12 @@ function ListUserPage() {
 
       console.log(res.status);
       if (res.status === 200) {
-        navigate("/admin/user/list");
+        navigate("/admin/washtype/list");
       }
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <div>
@@ -67,51 +68,39 @@ function ListUserPage() {
       <Container fluid>
         <Row>
           <Col className="text-center">
-            <h1>รายการ User</h1>
+            <h1>รายการ กลุ่ม</h1>
           </Col>
         </Row>
         <Row>
           <Col>
-            <a href={"/admin/user/create/"} className="btn btn-info">
-              สร้าง User
+            <a href={"/admin/group/create/"} className="btn btn-info">
+              สร้างกลุ่ม
             </a>
             <Table striped bordered hover>
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Email</th>
-                  <th>Mobile</th>
-                  <th>Group</th>
+                  <th>Desc</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 {userList.map((opt) => (
                   <tr>
-                    <td>
-                      {opt.fname} - {opt.lname}
-                    </td>
-                    <td>{opt.email}</td>
-                    <td>{opt.mobile}</td>
-                    <td>{opt.groupname}</td>
+                    <td>{opt.name}</td>
+                    <td>{opt.desc}</td>
                     <td>
                       <a
-                        href={"/admin/user/edit/" + opt.id}
+                        href={"/admin/group/edit/" + opt.id}
                         className="btn btn-primary"
                       >
                         Edit
-                      </a>
-                      <a
-                        href={"/admin/user/editgroup/" + opt.id}
-                        className="btn btn-secondary"
-                      >
-                        Edit Group
                       </a>
                       &nbsp;
                       <button
                         className="btn btn-danger"
                         data-id={opt.id}
-                        onClick={deleteUserHandler}
+                        onClick={deleteCarSizeHandler}
                       >
                         Delete
                       </button>
@@ -128,4 +117,4 @@ function ListUserPage() {
   );
 }
 
-export default ListUserPage;
+export default ListGroupPage;
